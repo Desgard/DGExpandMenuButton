@@ -5,7 +5,7 @@ The *ExpandMenuButton* inspired by the prototype in dribbble([here](https://drib
 
 ## Screenshot
 
-<img src="http://7xwh85.com1.z0.glb.clouddn.com/DGExpandMenu-o.gif" alt="img" width="260px">
+<img src="/Screenshot/DGExpandMenu-o.gif" alt="img" width="260px">
 
 
 ## Usage
@@ -53,7 +53,7 @@ The method can let you to add a new button freedomly and smoothly. It will check
 }
 ```
 
-<img src="http://7xwh85.com1.z0.glb.clouddn.com/DGExpandMenu.gif" alt="img" width="260px">
+<img src="/Screenshot/DGExpandMenu.gif" alt="img" width="260px">
 
 ## Next Feature
 
