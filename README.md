@@ -5,7 +5,7 @@ The *ExpandMenuButton* inspired by the prototype in dribbble([here](https://drib
 
 ## Screenshot
 
-<img src="/Screenshot/DGExpandMenu-o.gif" alt="img" width="260px">
+<img src="http://7xwh85.com1.z0.glb.clouddn.com/DGExpandMenu-o.gif" alt="img" width="260px">
 
 
 ## Usage
