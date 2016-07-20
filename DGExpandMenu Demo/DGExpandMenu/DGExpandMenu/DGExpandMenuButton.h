@@ -22,5 +22,6 @@ typedef NS_ENUM(NSUInteger, DGExpandState) {
                     andObjects: (UIButton *) btn, ...;
 
 - (void) addOneButton: (UIButton *) btn;
+- (void) delLastButton;
 
 @end

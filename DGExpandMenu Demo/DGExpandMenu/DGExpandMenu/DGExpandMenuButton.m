@@ -92,8 +92,19 @@
     }
 }
 
+- (void) delLastButton; {
+    if (self.buttons.count > 0) {
+        UIButton *btn = [self.buttons objectAtIndex: self.buttons.count - 1];
+        [self.buttons removeObjectAtIndex: [self.buttons count] - 1];
+        [self singleBtnExit:btn];
+    } else {
+        NSLog(@"Menu中没有按钮");
+    }
+}
+
 #pragma mark - Animations: Begin & End & Add
 - (void) expandMenu {
+    if (self.buttons.count == 0) return;
     self.endPositons = [NSMutableArray array];
     [UIView animateWithDuration: 0.6
                           delay: 0
@@ -170,6 +181,19 @@
                      completion:nil];
 }
 
+- (void) singleBtnExit: (UIButton *) btn {
+    [UIView animateWithDuration:0.6
+                          delay:0
+                        options:UIViewAnimationOptionCurveEaseInOut
+                     animations:^{
+                         btn.transform = CGAffineTransformMakeScale(5, 5);
+                         btn.alpha = 0;
+                     }
+                     completion:^(BOOL finished) {
+                         [btn removeFromSuperview];
+                     }];
+}
+
 #pragma mark - Algorithm
 - (CGPoint) rotateWithCenter: (CGPoint)O Point: (CGPoint) P angle: (CGFloat)alpha {
     CGFloat x1 = P.x, y1 = P.y;
@@ -196,6 +220,11 @@
         _rmainButton = [UIButton buttonWithType: UIButtonTypeCustom];
         [_rmainButton setImage: [UIImage imageNamed: @"close"] forState: UIControlStateNormal];
         _rmainButton.alpha = 0;
+        
+        UISwipeGestureRecognizer *swipeGestureRecognizer;
+        swipeGestureRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(delLastButton)];
+        swipeGestureRecognizer.direction = UISwipeGestureRecognizerDirectionDown;
+        [_rmainButton addGestureRecognizer:swipeGestureRecognizer];
     }
     return _rmainButton;
 }

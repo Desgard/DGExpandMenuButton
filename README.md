@@ -55,6 +55,18 @@ The method can let you to add a new button freedomly and smoothly. It will check
 
 <img src="/Screenshot/DGExpandMenu.gif" alt="img" width="260px">
 
+#### `- (void) delLastButton;`
+
+The method can let you to delete the last button in the menu, smoothly and quickly. And this interface is a internal method with gesture - Swip Down.
+
+##### e.g
+
+```Objcetive
+[_expandMenuButton delLastButton];
+```
+
+<img src="/Screenshot/DGExpandMenuDel.gif" alt="img" width="260px">
+
 ## Next Feature
 
 Add a *button array* to initialize. And developer can adjust sub-button's *Moving Distance* and *Angle between neighbor buttons*.
