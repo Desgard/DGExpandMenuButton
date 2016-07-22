@@ -67,9 +67,22 @@ The method can let you to delete the last button in the menu, smoothly and quick
 
 <img src="/Screenshot/DGExpandMenuDel.gif" alt="img" width="260px">
 
+
+#### `- (void) rotateAllButton;`
+
+When the menu buttons has been to the max number, you can trigger this function to rotate all buttons.
+
+##### e.g
+
+```Objcetive
+[_expandMenuButton rotateAllButton];
+```
+
+<img src="/Screenshot/DGExpandMenuRot.gif" alt="img" width="260px">
+
 ## Next Feature
 
-Add a *button array* to initialize. And developer can adjust sub-button's *Moving Distance* and *Angle between neighbor buttons*.
+To change angle, and add more buttons.
 
 ## The MIT License (MIT)
 
