@@ -42,12 +42,19 @@
     
     UIButton *plus = [UIButton buttonWithType: UIButtonTypeCustom];
     [plus setImage:[UIImage imageNamed:@"plus"] forState:UIControlStateNormal];
-    plus.frame = CGRectMake(185, 200, 40, 40);
+    plus.frame = CGRectMake(120, 200, 40, 40);
     [plus addTarget:self action:@selector(addButton) forControlEvents:UIControlEventTouchUpInside];
+    plus.tintColor = [UIColor whiteColor];
+    
+    UIButton *rotate = [UIButton buttonWithType: UIButtonTypeCustom];
+    [rotate setImage:[UIImage imageNamed:@"rotate"] forState:UIControlStateNormal];
+    rotate.frame = CGRectMake(180, 200, 40, 40);
+    [rotate addTarget:self action:@selector(rotate) forControlEvents:UIControlEventTouchUpInside];
     plus.tintColor = [UIColor whiteColor];
     
     [self.view addSubview: _ExpandMenuButton];
     [self.view addSubview: plus];
+    [self.view addSubview: rotate];
 }
 
 - (void)addButton {
@@ -56,6 +63,10 @@
     
     [_ExpandMenuButton addOneButton:btn5];
     // [_ExpandMenuButton delLastButton]
+}
+
+- (void)rotate {
+    [_ExpandMenuButton rotateAllButton];
 }
 
 @end

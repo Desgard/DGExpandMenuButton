@@ -23,5 +23,6 @@ typedef NS_ENUM(NSUInteger, DGExpandState) {
 
 - (void) addOneButton: (UIButton *) btn;
 - (void) delLastButton;
+- (void) rotateAllButton;
 
 @end

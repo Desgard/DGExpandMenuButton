@@ -12,8 +12,8 @@
 
 @property (nonatomic, strong) NSMutableArray<UIButton *> *buttons;
 @property (nonatomic, strong) NSMutableArray<NSValue *> *endPositons;
-@property (nonatomic, strong) UIButton *mainButton;
-@property (nonatomic, strong) UIButton *rmainButton;
+@property (nonatomic, copy) UIButton *mainButton;
+@property (nonatomic, copy) UIButton *rmainButton;
 @property (assign) CGPoint originPoint;
 @property (assign) CGRect originFrame;
 
@@ -37,6 +37,7 @@
         
         self.mainButton.frame = self.rmainButton.frame = self.originFrame = frame;;
         self.originPoint = self.mainButton.center;
+        
         
         _buttons = [NSMutableArray arrayWithObject: btn];
         va_list list;
@@ -92,13 +93,49 @@
     }
 }
 
-- (void) delLastButton; {
+- (void) delLastButton {
     if (self.buttons.count > 0) {
         UIButton *btn = [self.buttons objectAtIndex: self.buttons.count - 1];
         [self.buttons removeObjectAtIndex: [self.buttons count] - 1];
         [self singleBtnExit:btn];
     } else {
         NSLog(@"Menu中没有按钮");
+    }
+}
+
+- (void) rotateAllButton {
+    if (self.buttons.count == [self calcMaxBtnNumber]) {
+        
+        int cnt = (int)[self.buttons count] - 1;
+        int index[360], windex[360];
+        memset(index, -1, sizeof(index));
+        int l = 0, r = cnt;
+        for (int i = 0; i <= cnt; ++ i) {
+            if (i == 0) {
+                index[i] = 0;
+                l = 1;
+                continue;
+            }
+            if (i % 2) index[i] = r --;
+            else index[i] = l ++;
+        }
+        
+        for (int i = 0; i < (int)[self.buttons count]; ++ i) {
+            windex[i] = (index[i] + 1) % (self.buttons.count);
+        }
+        
+        NSMutableArray<UIButton *> *newButtons = [NSMutableArray array];
+        for (int i = 0; i < (int)[self.buttons count]; ++ i) {
+            for (int j = 0; j < (int)[self.buttons count]; ++ j) {
+                if (windex[i] == index[j]) {
+                    [newButtons addObject:self.buttons[j]];
+                }
+            }
+        }
+        self.buttons = newButtons;
+        if (self.menuState == DGExpandOpen) {
+            [self rotateAnimation];
+        }
     }
 }
 
@@ -192,6 +229,23 @@
                      completion:^(BOOL finished) {
                          [btn removeFromSuperview];
                      }];
+}
+
+- (void) rotateAnimation {
+    [UIView animateWithDuration: 1.2
+                          delay: 0
+         usingSpringWithDamping: 0.7f
+          initialSpringVelocity: 10
+                        options: UIViewAnimationOptionCurveEaseOut
+                     animations:^{
+                         int cnt = 0;
+                         for (UIButton *btn in _buttons) {
+                             btn.center = [[self.endPositons objectAtIndex:cnt] CGPointValue];
+                             cnt ++;
+                             if (cnt == [self calcMaxBtnNumber]) break;
+                         }
+                     }
+                     completion:nil];
 }
 
 #pragma mark - Algorithm
