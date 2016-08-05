@@ -27,7 +27,7 @@ DGExpandMenuButton *ExpandMenuButton = [[DGExpandMenuButton alloc] initWithFrame
 [self.view addSubview: ExpandMenuButton];
 ```
 
-### Implement 
+### Implement  
 
 #### `- (void) addOneButton: (UIButton *) btn;`
 
