@@ -16,12 +16,65 @@
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ylv-Za-tbw">
+                                <rect key="frame" x="138" y="118" width="45" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="45" id="sDA-U6-L0n"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="From" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="X1T-wb-LyW">
+                                <rect key="frame" x="90" y="123" width="40" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="To" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Toe-Cy-cXW">
+                                <rect key="frame" x="197" y="123" width="19" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="JSU-QJ-nFk">
+                                <rect key="frame" x="228" y="118" width="45" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="45" id="gs4-WM-M1g"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jfl-Ly-L3F">
+                                <rect key="frame" x="33" y="118" width="38" height="30"/>
+                                <state key="normal" title="Show"/>
+                                <connections>
+                                    <action selector="showIndex:" destination="BYZ-38-t0r" eventType="touchUpInside" id="FWA-y6-FkL"/>
+                                </connections>
+                            </button>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="Toe-Cy-cXW" firstAttribute="leading" secondItem="ylv-Za-tbw" secondAttribute="trailing" constant="14" id="1Th-vk-Y3W"/>
+                            <constraint firstItem="X1T-wb-LyW" firstAttribute="leading" secondItem="jfl-Ly-L3F" secondAttribute="trailing" constant="19" id="2Rt-P3-kC1"/>
+                            <constraint firstItem="ylv-Za-tbw" firstAttribute="leading" secondItem="X1T-wb-LyW" secondAttribute="trailing" constant="8" id="52w-WO-eRi"/>
+                            <constraint firstItem="JSU-QJ-nFk" firstAttribute="centerY" secondItem="ylv-Za-tbw" secondAttribute="centerY" id="EC2-V2-19g"/>
+                            <constraint firstItem="JSU-QJ-nFk" firstAttribute="leading" secondItem="Toe-Cy-cXW" secondAttribute="trailing" constant="12" id="G1j-tV-F5G"/>
+                            <constraint firstItem="Toe-Cy-cXW" firstAttribute="centerY" secondItem="ylv-Za-tbw" secondAttribute="centerY" id="JZT-lr-12x"/>
+                            <constraint firstItem="X1T-wb-LyW" firstAttribute="centerY" secondItem="ylv-Za-tbw" secondAttribute="centerY" id="gpO-Sz-Rli"/>
+                            <constraint firstItem="jfl-Ly-L3F" firstAttribute="centerY" secondItem="ylv-Za-tbw" secondAttribute="centerY" id="iyl-BY-Uto"/>
+                            <constraint firstItem="ylv-Za-tbw" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="98" id="neh-kx-n1T"/>
+                            <constraint firstItem="ylv-Za-tbw" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="tfH-Jg-SSl"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="fromNum" destination="ylv-Za-tbw" id="dKo-jO-NoK"/>
+                        <outlet property="toNum" destination="JSU-QJ-nFk" id="hDl-4z-Uwe"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="212.26666666666665" y="589.29999999999995"/>
+            <point key="canvasLocation" x="212" y="589"/>
         </scene>
     </scenes>
 </document>

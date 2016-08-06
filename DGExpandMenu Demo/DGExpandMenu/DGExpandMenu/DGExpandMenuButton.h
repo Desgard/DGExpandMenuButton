@@ -12,8 +12,10 @@
 
 typedef NS_ENUM(NSUInteger, DGExpandState) {
     DGExpandClose = 0,
-    DGExpandOpen = 1
+    DGExpandOpen = 1,
+    DGExpandShowIndex = 2
 };
+
 
 @interface DGExpandMenuButton : UIView
 
@@ -24,5 +26,8 @@ typedef NS_ENUM(NSUInteger, DGExpandState) {
 - (void) addOneButton: (UIButton *) btn;
 - (void) delLastButton;
 - (void) rotateAllButton;
+- (void) turnedLeftBy: (int) ind;
+- (void) turnedFrom: (int) indA to:(int)indB;
+- (void) showButtonIndex;
 
 @end

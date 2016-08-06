@@ -12,6 +12,7 @@
 
 @property (nonatomic, strong) NSMutableArray<UIButton *> *buttons;
 @property (nonatomic, strong) NSMutableArray<NSValue *> *endPositons;
+@property (nonatomic, strong) NSMutableArray<UIButton *> *indexNum;
 @property (nonatomic, copy) UIButton *mainButton;
 @property (nonatomic, copy) UIButton *rmainButton;
 @property (assign) CGPoint originPoint;
@@ -134,12 +135,134 @@
         }
         self.buttons = newButtons;
         if (self.menuState == DGExpandOpen) {
-            [self rotateAnimation];
+            [self rotateAnimation: YES];
         }
     }
 }
 
-#pragma mark - Animations: Begin & End & Add
+- (void) turnedLeftBy:(int)ind {
+    if (ind < (int)[self.buttons count]) {
+        int cnt = (int)[self.buttons count] - 1;
+        int index[360], windex[360];
+        memset(index, -1, sizeof(index));
+        int l = 0, r = cnt;
+        for (int i = 0; i <= cnt; ++ i) {
+            if (i == 0) {
+                index[i] = 0;
+                l = 1;
+                continue;
+            }
+            if (i % 2) index[i] = r --;
+            else index[i] = l ++;
+        }
+        for (int i = 0; i < (int)[self.buttons count]; ++ i) {
+            if (index[i] == ind) {
+                windex[i] = index[i] - 1;
+                if (windex[i] < 0) {
+                    windex[i] = (int)[self.buttons count] - 1;
+                }
+            } else if (index[i] == ind - 1) {
+                windex[i] = (index[i] + 1) % (int)[self.buttons count];
+            } else {
+                windex[i] = index[i];
+            }
+        }
+        
+        NSMutableArray<UIButton *> *newButtons = [NSMutableArray array];
+        for (int i = 0; i < (int)[self.buttons count]; ++ i) {
+            for (int j = 0; j < (int)[self.buttons count]; ++ j) {
+                if (windex[i] == index[j]) {
+                    [newButtons addObject:self.buttons[j]];
+                }
+            }
+        }
+        self.buttons = newButtons;
+        
+        if (self.menuState == DGExpandOpen) {
+            [self tureAnimation];
+        }
+    }
+}
+
+- (void)turnedFrom:(int)indA to:(int)indB {
+    if (indA < (int)[self.buttons count] && indB < (int)[self.buttons count]) {
+        int cnt = (int)[self.buttons count] - 1;
+        int index[360], windex[360];
+        memset(index, -1, sizeof(index));
+        int l = 0, r = cnt;
+        for (int i = 0; i <= cnt; ++ i) {
+            if (i == 0) {
+                index[i] = 0;
+                l = 1;
+                continue;
+            }
+            if (i % 2) index[i] = r --;
+            else index[i] = l ++;
+        }
+        for (int i = 0; i < (int)[self.buttons count]; ++ i) {
+            if (index[i] == indA) {
+                l = i;
+            }
+            if (index[i] == indB) {
+                r = i;
+            }
+            windex[i] = index[i];
+        }
+        int swap = windex[l];
+        windex[l] = windex[r];
+        windex[r] = swap;
+        
+        NSMutableArray<UIButton *> *newButtons = [NSMutableArray array];
+        for (int i = 0; i < (int)[self.buttons count]; ++ i) {
+            for (int j = 0; j < (int)[self.buttons count]; ++ j) {
+                if (windex[i] == index[j]) {
+                    [newButtons addObject:self.buttons[j]];
+                }
+            }
+        }
+        self.buttons = newButtons;
+        
+        if (self.menuState == DGExpandOpen) {
+            [self tureAnimation];
+        }
+    }
+}
+
+- (void)showButtonIndex {
+    if (self.menuState == DGExpandOpen) {
+        self.menuState = DGExpandShowIndex;
+        int cnt = (int)[self.buttons count] - 1;
+        int index[360];
+        memset(index, -1, sizeof(index));
+        int l = 0, r = cnt;
+        for (int i = 0; i <= cnt; ++ i) {
+            if (i == 0) {
+                index[i] = 0;
+                l = 1;
+                continue;
+            }
+            if (i % 2) index[i] = r --;
+            else index[i] = l ++;
+        }
+
+        self.indexNum = [NSMutableArray array];
+        for (int i = 0; i < (int)[self.buttons count]; ++ i) {
+            UIButton *ind = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+            ind.frame = self.rmainButton.frame;
+            [ind setTitle:[NSString stringWithFormat:@"%d", index[i]] forState:UIControlStateNormal];
+            ind.titleLabel.font = [UIFont systemFontOfSize:40];
+            ind.tintColor = [UIColor whiteColor];
+            ind.backgroundColor = [UIColor clearColor];
+            ind.alpha = 0;
+            [self.indexNum addObject:ind];
+            [self addSubview:ind];
+            
+        }
+        [self showIndexAnimation];
+    }
+}
+
+#pragma mark - Animations: Begin & End & Add & Change
 - (void) expandMenu {
     if (self.buttons.count == 0) return;
     self.endPositons = [NSMutableArray array];
@@ -231,21 +354,130 @@
                      }];
 }
 
-- (void) rotateAnimation {
-    [UIView animateWithDuration: 1.2
+- (void) rotateAnimation: (BOOL)needSpring {
+    if (needSpring) {
+        [UIView animateWithDuration: 1.2
+                              delay: 0
+             usingSpringWithDamping: 0.7f
+              initialSpringVelocity: 10
+                            options: UIViewAnimationOptionCurveEaseOut
+                         animations:^{
+                             int cnt = 0;
+                             for (UIButton *btn in _buttons) {
+                                 btn.center = [[self.endPositons objectAtIndex:cnt] CGPointValue];
+                                 cnt ++;
+                                 if (cnt == [self calcMaxBtnNumber]) break;
+                             }
+                         }
+                         completion:^(BOOL finished) {
+                             [self resetAnimation];
+                         }];
+    } else {
+        [UIView animateWithDuration: 0.3
+                              delay: 0
+             usingSpringWithDamping: 0.7f
+              initialSpringVelocity: 8
+                            options: UIViewAnimationOptionCurveEaseOut
+                         animations:^{
+                             int cnt = 0;
+                             for (UIButton *btn in _buttons) {
+                                 btn.center = [[self.endPositons objectAtIndex:cnt] CGPointValue];
+                                 cnt ++;
+                                 if (cnt == [self calcMaxBtnNumber]) break;
+                             }
+                         }
+                         completion:^(BOOL finished) {
+                             [self resetAnimation];
+                         }];
+
+    }
+}
+
+- (void) resetAnimation {
+    [UIView animateWithDuration:0.3 animations:^{
+        for (UIButton *btn in _buttons) {
+            btn.transform = CGAffineTransformMakeScale(1, 1);
+            btn.alpha = 1;
+            self.rmainButton.alpha = 1;
+            [self sendSubviewToBack:self.rmainButton];
+        }
+    }];
+}
+
+- (void) tureAnimation {
+    [UIView animateWithDuration: 0.3
                           delay: 0
          usingSpringWithDamping: 0.7f
           initialSpringVelocity: 10
                         options: UIViewAnimationOptionCurveEaseOut
                      animations:^{
-                         int cnt = 0;
+                         int cnt = 0, flag = 0;
                          for (UIButton *btn in _buttons) {
-                             btn.center = [[self.endPositons objectAtIndex:cnt] CGPointValue];
+                             double x = btn.center.x, y = btn.center.y;
+                             double tox = [[self.endPositons objectAtIndex:cnt] CGPointValue].x, toy = [[self.endPositons objectAtIndex:cnt] CGPointValue].y;
+                             if (x != tox || y != toy) {
+                                 if (flag % 2 == 0) {
+                                     btn.transform = CGAffineTransformMakeScale(0.7, 0.7);
+                                     [self sendSubviewToBack:btn];
+                                     btn.alpha = 0.6;
+                                     self.rmainButton.alpha = 0;
+                                     flag ++;
+                                 } else {
+                                     btn.transform = CGAffineTransformMakeScale(1.3, 1.3);
+                                     flag ++;
+                                 }
+                             }
                              cnt ++;
-                             if (cnt == [self calcMaxBtnNumber]) break;
                          }
+                         
                      }
-                     completion:nil];
+                     completion:^(BOOL finished) {
+                         [self rotateAnimation: NO];
+                     }];
+}
+
+- (void) showIndexAnimation {
+    if (self.buttons.count == 0) return;
+    if (self.menuState == DGExpandClose) return;
+    int cnt = 0;
+    for (UIButton *btn in _indexNum) {
+        btn.center = [[self.endPositons objectAtIndex:cnt] CGPointValue];
+        cnt ++;
+        if (cnt == [self calcMaxBtnNumber]) break;
+        btn.transform = CGAffineTransformMakeScale(0.1, 0.1);
+    }
+    
+    [UIView animateWithDuration: 0.6
+                          delay: 0
+         usingSpringWithDamping: 0.7f
+          initialSpringVelocity: 25
+                        options: UIViewAnimationOptionCurveEaseOut
+                     animations:^{
+                         for (UIButton *btn in _indexNum) {
+                             btn.alpha = 1;
+                             btn.transform = CGAffineTransformMakeScale(1, 1);
+                         }
+                         for (UIButton *btn in _buttons) {
+                             btn.alpha = 0.3;
+                         }
+                         
+                     }
+                     completion:^(BOOL finished) {
+                         [UIView animateWithDuration:0.4
+                                          animations:^{
+                                              for (UIButton *btn in _indexNum) {
+                                                  btn.alpha = 0;
+                                                  btn.transform = CGAffineTransformMakeScale(0.1, 0.1);
+                                              }
+                                          }
+                                          completion:^(BOOL finished) {
+                                              for (UIButton *btn in _indexNum) {
+                                                  [btn removeFromSuperview];
+                                              }
+                                              self.menuState = DGExpandOpen;
+                                              [self resetAnimation];
+                                          }];
+                     }];
 }
 
 #pragma mark - Algorithm

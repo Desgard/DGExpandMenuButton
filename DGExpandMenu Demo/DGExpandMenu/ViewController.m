@@ -10,6 +10,8 @@
 #import "DGExpandMenuButton.h"
 
 @interface ViewController ()
+@property (weak, nonatomic) IBOutlet UITextField *fromNum;
+@property (weak, nonatomic) IBOutlet UITextField *toNum;
 @property(nonatomic, strong) DGExpandMenuButton *ExpandMenuButton;
 @end
 
@@ -52,9 +54,18 @@
     [rotate addTarget:self action:@selector(rotate) forControlEvents:UIControlEventTouchUpInside];
     plus.tintColor = [UIColor whiteColor];
     
+    UIButton *change = [UIButton buttonWithType: UIButtonTypeCustom];
+    [change setImage:[UIImage imageNamed:@"change"] forState:UIControlStateNormal];
+    change.frame = CGRectMake(240, 200, 40, 40);
+    [change addTarget:self action:@selector(change) forControlEvents:UIControlEventTouchUpInside];
+    change.tintColor = [UIColor whiteColor];
+    
     [self.view addSubview: _ExpandMenuButton];
     [self.view addSubview: plus];
     [self.view addSubview: rotate];
+    [self.view addSubview: change];
+    
+    [self.view sendSubviewToBack:_ExpandMenuButton];
 }
 
 - (void)addButton {
@@ -67,6 +78,16 @@
 
 - (void)rotate {
     [_ExpandMenuButton rotateAllButton];
+}
+
+- (void)change {
+    int from = [self.fromNum.text intValue];
+    int to = [self.toNum.text intValue];
+    [_ExpandMenuButton turnedFrom:from to:to];
+
+}
+- (IBAction)showIndex:(id)sender {
+    [_ExpandMenuButton showButtonIndex];
 }
 
 @end

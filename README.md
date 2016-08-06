@@ -29,7 +29,7 @@ DGExpandMenuButton *ExpandMenuButton = [[DGExpandMenuButton alloc] initWithFrame
 
 ### Implement  
 
-#### `- (void) addOneButton: (UIButton *) btn;`
+#### `- (void)addOneButton:(UIButton *)btn;`
 
 The method can let you to add a new button freedomly and smoothly. It will check the menu status to judge whether the new button needs a *animation*. 
 
@@ -53,32 +53,42 @@ The method can let you to add a new button freedomly and smoothly. It will check
 }
 ```
 
-<img src="/Screenshot/DGExpandMenu.gif" alt="img" width="260px">
+| ```[_ExpandMenuButton addOneButton:btn];``` | <img src="/Screenshot/DGExpandMenu.gif" alt="img" width="260px"> |
+| --- | --- |
 
-#### `- (void) delLastButton;`
+#### `- (void)delLastButton;`
 
 The method can let you to delete the last button in the menu, smoothly and quickly. And this interface is a internal method with gesture - Swip Down.
 
 ##### e.g
 
-```Objcetive
-[_expandMenuButton delLastButton];
-```
-
-<img src="/Screenshot/DGExpandMenuDel.gif" alt="img" width="260px">
+| ```[_expandMenuButton delLastButton];``` | <img src="/Screenshot/DGExpandMenuDel.gif" alt="img" width="260px"> |
+| --- | --- |
 
 
-#### `- (void) rotateAllButton;`
+#### `- (void)rotateAllButton;`
 
 When the menu buttons has been to the max number, you can trigger this function to rotate all buttons.
 
 ##### e.g
 
-```Objcetive
-[_expandMenuButton rotateAllButton];
-```
 
-<img src="/Screenshot/DGExpandMenuRot.gif" alt="img" width="260px">
+| ```[_expandMenuButton rotateAllButton];``` | <img src="/Screenshot/DGExpandMenuRot.gif" alt="img" width="260px"> |
+| --- | --- |
+
+#### `- (void)showButtonIndex;`
+
+This function can show the index of every buttons. You will use it when using function behind, if you like.
+
+#### `- (void)turnedFrom:(int)indA to:(int)indB `
+
+You can exchange position the buttons' position by this function. And you need to know the index of the button by `showButtonIndex` function.
+
+##### e.g
+
+| ```[_ExpandMenuButton turnedFrom:val1 to:val2];``` | <img src="/Screenshot/DGExpandMenuExc.gif" alt="img" width="260px"> |
+| --- | --- |
+
 
 ## Next Feature
 
