@@ -92,7 +92,7 @@ You can exchange position the buttons' position by this function. And you need t
 
 ## Next Feature
 
-To change angle, and add more buttons.
+If you want to add some special feature, you can start a `pull request` or a `issue` to tell me the good idea!
 
 ## The MIT License (MIT)
 
